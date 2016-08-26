@@ -1,0 +1,10 @@
+{
+  "autoload": {
+    "psr-4": {
+      "Venus\\": "src/"
+    },
+    "files": [
+      "helpers/functions.php"
+    ]
+  }
+}
