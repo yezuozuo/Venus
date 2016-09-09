@@ -1,4 +1,14 @@
 {
+  "name": "yezuozuo/Venus",
+  "description": "a mysql adapter for php",
+  "type": "util",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "yezuozuo",
+      "email": "zoco.qi@qq.com"
+    }
+  ],
   "autoload": {
     "psr-4": {
       "Venus\\": "src/"
