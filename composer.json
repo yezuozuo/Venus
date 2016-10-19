@@ -2,6 +2,7 @@
   "name": "yezuozuo/venus",
   "description": "a mysql adapter for php",
   "type": "util",
+  "Minimum Stability": "dev",
   "license": "MIT",
   "authors": [
     {

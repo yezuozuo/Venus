@@ -25,6 +25,6 @@ $sdb->select('*'); //$sdb->select('*',true);
 $sdb->from('d_users');
 $sdb->where('id=1'); //$sdb->where('*id=1',true);
 $sdb->order('id desc');
-$sdb->limit(1,2);
+$sdb->limit(1);
 var_dump($sdb->getAll());
 
