@@ -600,7 +600,14 @@ class SelectDB {
             $this->sql = $sql;
         }
 
-        $this->result = $this->db->query($this->sql);
+        $res = $this->db->query($this->sql);
+        if($res) {
+            $this->result = $res;
+        } else {
+            echo $this->getSql();
+            trigger_error($this->getSql());
+            exit();
+        }
     }
 
     /**
