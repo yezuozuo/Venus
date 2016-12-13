@@ -182,7 +182,7 @@ class Database {
      */
     public function query($sql) {
         if ($this->debug) {
-            echo $sql.SP;
+            echo $sql;
         }
         $this->readTimes++;
 
@@ -233,9 +233,8 @@ class Database {
      */
     public function delete($id, $table, $where = 'id') {
         if (func_num_args() < 2) {
-            errorInfo('SelectDB param error', 'Delete must have 2 params ($id,$table)!');
-
-            return false;
+            trigger_error('SelectDB param error', 'Delete must have 2 params ($id,$table)!');
+            exit();
         }
         $this->dbApt->__init();
         $this->dbApt->from($table);
@@ -255,9 +254,8 @@ class Database {
      */
     public function update($id, $data, $table, $where = 'id') {
         if (func_num_args() < 3) {
-            errorInfo('SelectDB param error', 'Update must have 3 params ($id,$data,$table)!');
-
-            return false;
+            trigger_error('SelectDB param error', 'Update must have 3 params ($id,$data,$table)!');
+            exit();
         }
         $this->dbApt->__init();
         $this->dbApt->from($table);

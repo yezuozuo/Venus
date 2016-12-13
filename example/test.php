@@ -14,7 +14,7 @@ $config = array(
     'port'       => 3306,
     'user'       => "root",
     'password'   => "123456789",
-    'name'       => "test_1",
+    'name'       => "mysql",
     'charset'    => "utf8",
     'persistent' => false,
 );
@@ -22,9 +22,8 @@ $db     = new \Venus\Database($config);
 $db->connect();
 $sdb = $db->dbApt;
 $sdb->select('*'); //$sdb->select('*',true);
-$sdb->from('d_users');
+$sdb->from('user');
 $sdb->where('id=1'); //$sdb->where('*id=1',true);
 $sdb->order('id desc');
 $sdb->limit(1);
 var_dump($sdb->getAll());
-

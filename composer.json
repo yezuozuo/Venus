@@ -13,9 +13,12 @@
   "autoload": {
     "psr-4": {
       "Venus\\": "src/"
-    },
-    "files": [
-      "helpers/functions.php"
-    ]
+    }
+  },
+  "repositories": {
+    "packagist": {
+      "type": "composer",
+      "url": "https://packagist.phpcomposer.com"
+    }
   }
 }

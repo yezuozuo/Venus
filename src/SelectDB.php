@@ -248,16 +248,6 @@ class SelectDB {
     }
 
     /**
-     * 指定查询所使用的索引字段
-     *
-     * @param $field
-     */
-    public function useIndex($field) {
-        self::sqlSafe($field);
-        $this->useIndex = "use index($field)";
-    }
-
-    /**
      * 使SQL元素安全
      *
      * @param $sqlSub
@@ -430,56 +420,6 @@ class SelectDB {
     }
 
     /**
-     * @param $params
-     */
-    public function rawPut($params) {
-        foreach ($params as $value) {
-            if (isset($value[0]) && isset($value[1]) && count($value) == 2) {
-                $this->_call($value[0], $value[1]);
-            } else {
-                $this->rawPut($value);
-            }
-        }
-    }
-
-    /**
-     * @param $method
-     * @param $param
-     * @return bool
-     */
-    private function _call($method, $param) {
-        if ($method == 'update' || $method == 'delete' || $method == 'insert') {
-            return false;
-        }
-        if (strpos($method, '_') !== 0) {
-            if (method_exists($this, $method)) {
-                if (is_array($param)) {
-                    call_user_func_array(array($this, $method), $param);
-                } else {
-                    $this->$method($param);
-                }
-            } else {
-                if ($this->callBy == 'func') {
-                    $this->where($method . '="' . $param . '"');
-                } else {
-                    if ($this->callBy == 'smarty') {
-                        if (strpos($param, '$') === false) {
-                            $this->where($method . '="' . $param . '"');
-                        } else {
-                            $this->where($method . "='{" . $param . "}'");
-                        }
-                    } else {
-                        errorInfo('Error: SelectDB 错误的参数', "参数$method=$param");
-                        exit();
-                    }
-                }
-            }
-        }
-
-        return false;
-    }
-
-    /**
      * 锁定行或表
      */
     public function lock() {
@@ -499,61 +439,6 @@ class SelectDB {
             $this->union       = 'union (' . $sql->getSql(true) . ')';
         } else {
             $this->union = 'union (' . $sql . ')';
-        }
-    }
-
-    /**
-     * 将数组作为指令调用
-     *
-     * @param $params
-     */
-    public function put($params) {
-        if (isset($params['put'])) {
-            errorInfo('SelectDB Error!', 'Params put() cannot call put()!');
-        }
-        /**
-         * 处理where条件
-         */
-        if (isset($params['where'])) {
-            $wheres = $params['where'];
-            if (is_array($wheres)) {
-                foreach ($wheres as $where) {
-                    $this->where($where);
-                }
-            } else {
-                $this->where($wheres);
-            }
-            unset($params['where']);
-        }
-        /**
-         * 处理orWhere条件
-         */
-        if (isset($params['orWhere'])) {
-            $orWheres = $params['orWhere'];
-            if (is_array($orWheres)) {
-                foreach ($orWheres as $orWhere) {
-                    $this->orWhere($orWhere);
-                }
-            } else {
-                $this->orWhere($orWheres);
-            }
-            unset($params['orWhere']);
-        }
-        /**
-         * 处理walk调用
-         */
-        if (isset($params['walk'])) {
-            foreach ($params['walk'] as $call) {
-                list($key, $value) = each($call);
-                $this->_call($key, $value);
-            }
-            unset($params['walk']);
-        }
-        /**
-         * 处理其他参数
-         */
-        foreach ($params as $key => $value) {
-            $this->_call($key, $value);
         }
     }
 
@@ -636,7 +521,6 @@ class SelectDB {
         $field  = substr($field, 0, -1);
         $values = substr($values, 0, -1);
 
-        echo "insert into {$this->table} ($field) values($values)";
         return $this->db->query("insert into {$this->table} ($field) values($values)");
     }
 

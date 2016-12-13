@@ -59,11 +59,11 @@ class PdoDB extends \PDO implements IDatabase {
      * 执行一个SQL语句
      *
      * @param string $sql
-     * @return bool
+     * @return \PDOStatement
      */
     public final function query($sql) {
         if ($this->debug) {
-            echo $sql.SP;
+            echo $sql;
         }
         $res = parent::query($sql);
 
@@ -89,9 +89,8 @@ class PdoDB extends \PDO implements IDatabase {
 
             return $ret;
         } else {
-            errorInfo("SQL Error", implode(", ", $this->errorInfo()) . "$sql");
-
-            return false;
+            trigger_error("SQL Error", implode(", ", $this->errorInfo()) . "$sql");
+            exit();
         }
     }
 
@@ -114,9 +113,8 @@ class PdoDB extends \PDO implements IDatabase {
 
             return $ret;
         } else {
-            errorInfo("SQL Error", implode(", ", $this->errorInfo()) . "$sql");
-
-            return false;
+            trigger_error("SQL Error", implode(", ", $this->errorInfo()) . "$sql");
+            exit();
         }
     }
 
@@ -136,9 +134,8 @@ class PdoDB extends \PDO implements IDatabase {
         if ($stm->execute($params)) {
             return $this->lastInsertId();
         } else {
-            errorInfo("SQL Error", implode(", ", $this->errorInfo()) . "$sql");
-
-            return false;
+            trigger_error("SQL Error", implode(", ", $this->errorInfo()) . "$sql");
+            exit();
         }
     }
 
