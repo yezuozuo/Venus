@@ -36,7 +36,6 @@ class PdoDB extends \PDO implements IDatabase {
 
     public function connect() {
         $dsn = $this->config['dbms'] . ":host=" . $this->config['host'] . ";port=" . $this->config['port'] . ";dbname=" . $this->config['name'];
-
         if (!empty($this->config['persistent'])) {
             parent::__construct($dsn, $this->config['user'], $this->config['password'], array(\PDO::ATTR_PERSISTENT => true));
         } else {
